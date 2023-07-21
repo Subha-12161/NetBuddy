@@ -1,0 +1,110 @@
+<%- include('../common/header') %>
+
+  <body class="authentication-bg bg-primary">
+    <div class="home-center">
+      <div class="home-desc-center">
+        <div class="container">
+          <div class="row justify-content-center">
+            <div class="col-md-8 col-lg-6 col-xl-5">
+              <div class="card" style="margin-top: 15px;margin-bottom: 55px;">
+                <div class="card-body">
+                  <div class="alert alert-danger alert-message-div"
+                    style="display: block;text-align: center;font-size: initial;">
+                    <span id="alert-message"></strong></span>
+                  </div>
+                  <div class="px-2 py-3">
+                    <div class="text-center">
+                      <a href="index.html">
+                        <img src="assets/images/logo-dark.png" style="height: 55px;margin-bottom: -30px;" alt="logo">
+                      </a>
+                    </div>
+                    <form class="form-horizontal mt-4 pt-2" onsubmit="return submitForm(event);">
+                      <div class="mb-3">
+                        <label for="name">Name</label>
+                        <input type="text" class="form-control" id="name" placeholder="Enter name">
+                      </div>
+
+                      <div class="mb-3">
+                        <label for="email">Email</label>
+                        <input type="email" class="form-control" id="email" placeholder="Enter email">
+                      </div>
+
+
+                      <div class="mb-3">
+                        <label for="password">Password</label>
+                        <input type="password" class="form-control" id="password" placeholder="Enter password">
+                      </div>
+
+                      <div class="mb-3">
+                        <label for="cpassword">Confirm Password</label>
+                        <input type="password" class="form-control" id="cpassword" placeholder="Confirm password">
+                      </div>
+
+                      <div class="mt-4">
+                        <button class="btn btn-primary w-100 waves-effect waves-light" type="submit">Register</button>
+                      </div>
+
+                      <div class="mt-4 text-center">
+                        <p class="mb-0">By registering you agree to the NetBuddy <a href="#" class="text-primary">Terms
+                            of Use</a></p>
+                      </div>
+
+                      <div class="mt-4 text-center">
+                        <p>Already have an account ? <a href="/login"> Login </a> </p>
+                      </div>
+                    </form>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- End Log In page -->
+    </div>
+
+    <script>
+      function submitForm(event) {
+        event.preventDefault();
+
+        var name = document.getElementById('name').value;
+        var email = document.getElementById('email').value;
+        var password = document.getElementById('password').value;
+        var cpassword = document.getElementById('cpassword').value;
+        console.log(name, email, password, cpassword);
+        var alertMessageElement = document.getElementById('alert-message');
+        var alertElement = alertMessageElement.parentElement;
+
+        var data = { name: name, email: email, password: password, cpassword: cpassword };
+
+        fetch('/api/user/register', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data),
+        })
+          .then(response => {
+            if (response.status === 201) {
+              document.querySelector("form").reset();
+              alertElement.className = 'alert alert-success alert-message-div';
+            } else {
+              alertElement.className = 'alert alert-danger alert-message-div';
+            }
+            return response.json();
+          })
+          .then(data => {
+            alertMessageElement.textContent = data.Message;
+            alertElement.style.display = 'block';
+          })
+          .catch(error => {
+            console.error('Error:', error);
+          });
+
+        return false;
+      }
+
+    </script>
+
+    <%- include('../common/footer') %>

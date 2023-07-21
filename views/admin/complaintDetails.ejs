@@ -1,0 +1,133 @@
+<%- include('../common/header') %>
+    <%- include('../common/sidebar') %>
+
+        <!-- Start right Content here -->
+        <div class="main-content">
+
+            <div class="page-content">
+
+                <!-- start page title -->
+                <div class="page-title-box">
+                    <div class="container-fluid">
+                        <div class="row align-items-center">
+                            <div class="col-sm-6">
+                                <div class="page-title">
+                                    <ol class="breadcrumb m-0">
+                                        <li class="breadcrumb-item">Complaints</li>
+                                        <li class="breadcrumb-item"><a href="javascript: void(0);">Complaint Details</a>
+                                        </li>
+                                    </ol>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- end page title -->
+
+                <div class="container-fluid">
+                    <div class="page-content-wrapper">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                            <table class="table">
+                                                <thead class="thead-dark">
+                                                    <tr>
+                                                        <th>SL No</th>
+                                                        <th>Task Number</th>
+                                                        <th>Customer Name</th>
+                                                        <th>Email</th>
+                                                        <th>Mobile</th>
+                                                        <th>Created Date</th>
+                                                        <th>Status</th>
+                                                        <th>Check</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <% let count=(complaints.currentPage - 1) * 20 + 1; %>
+                                                        <% complaints['complaints'].forEach(function(complaint) { %>
+                                                            <tr>
+                                                                <td>
+                                                                    <%= count%>
+                                                                </td>
+                                                                <td>
+                                                                    <%= complaint.taskSNo %>
+                                                                </td>
+                                                                <td>
+                                                                    <%= complaint.name %>
+                                                                </td>
+                                                                <td>
+                                                                    <%= complaint.email %>
+                                                                </td>
+                                                                <td>
+                                                                    <%= complaint.mobile %>
+                                                                </td>
+                                                                <td>
+                                                                    <%= new Date(complaint.crystalDate).toDateString()
+                                                                        %>
+                                                                </td>
+                                                                <td>
+                                                                    <span
+                                                                        style="color: <%= (complaint.status == 'Open') ? 'orange' : complaint.status == 'In-progress' ? 'red' : 'Green' %>">
+                                                                        <%=complaint.status %>
+                                                                    </span>
+
+                                                                </td>
+                                                                <td><a
+                                                                        href="/complaintDetails?id=<%= complaint.taskSNo %>" >View</a>
+                                                                </td>
+                                                            </tr>
+                                                            <% count++; %>
+                                                                <% }); %>
+                                                </tbody>
+                                            </table>
+
+                                            <div class="col-12">
+                                                <nav aria-label="Page navigation example">
+                                                    <ul class="pagination">
+                                                        <% if (complaints.currentPage> 1) { %>
+                                                            <li class="page-item">
+                                                                <a class="page-link"
+                                                                    href="/complaintDetails?page=<%= complaints.currentPage - 1 %>">Previous</a>
+                                                            </li>
+                                                            <% } %>
+                                                                <% for(let i=1; i <=complaints.totalPages; i++) { %>
+                                                                    <li
+                                                                        class="page-item <% if(i === complaints.currentPage) { %>active<% } %>">
+                                                                        <a class="page-link" href="/complaintDetails?page=<%= i %>">
+                                                                            <%= i %>
+                                                                        </a>
+                                                                    </li>
+                                                                    <% } %>
+                                                                        <% if (complaints.currentPage < complaints.totalPages){ %>
+                                                                            <li class="page-item">
+                                                                                <a class="page-link" href="/complaintDetails?page=<%= complaints.currentPage + 1 %>
+                                                                                     ">
+                                                                                    Next
+                                                                                </a>
+                                                                            </li>
+                                                                            <% } %>
+                                                    </ul>
+                                                </nav>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> <!-- end col -->
+                            
+                        </div> <!-- end row -->
+                    </div>
+
+
+                </div> <!-- container-fluid -->
+            </div>
+            <!-- End Page-content -->
+
+        </div>
+        <!-- end main content-->
+
+        </div>
+        <!-- END layout-wrapper -->
+
+        <%- include('../common/footer') %>
