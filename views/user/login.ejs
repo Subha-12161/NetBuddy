@@ -1,0 +1,118 @@
+<%- include('../common/header') %>
+
+    <body class="authentication-bg bg-primary">
+        <div class="home-center">
+            <div class="home-desc-center">
+
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-md-8 col-lg-6 col-xl-5">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="px-2 py-3">
+
+
+                                        <div class="text-center">
+                                            <a href="/">
+                                                <img src="assets/images/logo-dark.png"
+                                                    style="height: 55px;margin-bottom: -30px;" alt="logo">
+                                            </a>
+
+                                            <h5 class="text-primary mb-2 mt-4">Welcome Back !</h5>
+                                        </div>
+
+                                        <div class="alert alert-danger alert-message-div"
+                                            style="display: block;text-align: center;font-size: initial;">
+                                            <span id="alert-message"></strong></span>
+                                        </div>
+
+                                        <form class="form-horizontal mt-4 pt-2" onsubmit="return submitForm(event);">
+
+                                            <div class="mb-3">
+                                                <label for="email">Email</label>
+                                                <input type="text" class="form-control" id="email" name="email"
+                                                    placeholder="Enter email">
+                                            </div>
+
+                                            <div class="mb-3">
+                                                <label for="password">Password</label>
+                                                <input type="password" class="form-control" id="password"
+                                                    name="password" placeholder="Enter password">
+                                            </div>
+
+                                            <div>
+                                                <button class="btn btn-primary w-100 waves-effect waves-light"
+                                                    type="submit">Log In</button>
+                                            </div>
+
+                                            <div class="mt-4 text-center">
+                                                <a href="#" class="text-muted"><i class="mdi mdi-lock me-1"></i> Forgot
+                                                    your password?</a>
+                                            </div>
+
+                                            <div class="mt-4 text-center">
+                                                <p>Don't have an account ?<a href="/register"> Register</a> </p>
+                                            </div>
+                                        </form>
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+            </div>
+            <!-- End Log In page -->
+        </div>
+
+        <script>
+            function submitForm(event) {
+                event.preventDefault();
+
+                var email = document.getElementById('email').value;
+                var password = document.getElementById('password').value;
+
+                var alertMessageElement = document.getElementById('alert-message');
+                var alertElement = alertMessageElement.parentElement;
+
+                var data = { email, password };
+
+                fetch('/api/user/signin', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data),
+                    credentials: 'include'
+                })
+                    .then(response => {
+                        if (response.status === 202) {
+                            alertElement.className = 'alert alert-success alert-message-div';
+                            return response.json();
+                        } else {
+                            alertElement.className = 'alert alert-danger alert-message-div';
+                            return response.json();
+                        }
+                    })
+                    .then(data => {
+                        if (data.JWT) {
+                            window.location.href = '/';
+                        } else {
+                            alertMessageElement.textContent = data.Message;
+                            alertElement.style.display = 'block';
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+
+                return false;
+            }
+
+        </script>
+
+        <%- include('../common/footer') %>

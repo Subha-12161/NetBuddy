@@ -23,14 +23,9 @@ const userSchema = new mongoose.Schema({
         type: Number,
         default: 0
     },
-    tokens: [
-        {
-            token: {
-                type: String,
-                required: true
-            }
-        }
-    ]
+    tokens: {
+        type: String,
+    }
 });
 
 // pass hashing
@@ -44,13 +39,9 @@ userSchema.pre('save', async function (next) {
 //token
 userSchema.methods.generateAuthToken = async function () {
     try {
-
-        let token = jwt.sign({ _id: this._id }, process.env.SECRET_KEY, { expiresIn: "20m" });
-
+        let token = jwt.sign({ _id: this._id }, process.env.SECRET_KEY, { expiresIn: "1d" });
         const user = await User.findOne({ _id: this._id });
-        const tokens = user.tokens || [];
-        tokens.splice(0, 1, { token: token });
-        await User.updateOne({ _id: this._id }, { tokens });
+        await User.updateOne({ _id: this._id }, { tokens: token });
         return token;
 
     } catch (error) {

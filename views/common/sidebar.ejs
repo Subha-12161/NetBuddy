@@ -1,0 +1,163 @@
+<body>
+    <!-- Begin page -->
+    <div id="layout-wrapper">
+
+        <header id="page-topbar">
+            <div class="navbar-header">
+                <div class="d-flex">
+
+                    <!-- LOGO -->
+                    <div class="navbar-brand-box">
+                        <a href="/" class="logo logo-dark">
+                            <span class="logo-sm">
+                                <img src="/assets/images/favicon.png" alt="" height="22">
+                            </span>
+                            <span class="logo-lg">
+                                <img src="/assets/images/logo-dark.png" alt="" height="65px">
+                            </span>
+                        </a>
+                    </div>
+
+                    <button type="button" class="btn btn-sm px-3 font-size-24 header-item waves-effect"
+                        id="vertical-menu-btn">
+                        <i class="mdi mdi-menu"></i>
+                    </button>
+                </div>
+
+                <!-- Search input -->
+                <!-- <div class="search-wrap" id="search-wrap">
+                    <div class="search-bar">
+                        <input class="search-input form-control" placeholder="Search" />
+                        <a href="#" class="close-search toggle-search" data-target="#search-wrap">
+                            <i class="mdi mdi-close-circle"></i>
+                        </a>
+                    </div>
+                </div> -->
+
+                <div class="d-flex">
+                    <!-- <div class="dropdown d-none d-lg-inline-block">
+                        <button type="button" class="btn header-item toggle-search noti-icon waves-effect"
+                            data-target="#search-wrap">
+                            <i class="mdi mdi-magnify"></i>
+                        </button>
+                    </div>-->
+
+                    <div class="dropdown d-none d-lg-inline-block ms-1">
+                        <button type="button" class="btn header-item noti-icon waves-effect" data-toggle="fullscreen">
+                            <i class="mdi mdi-fullscreen"></i>
+                        </button>
+                    </div>
+
+                    <div class="dropdown d-inline-block">
+                        <button type="button" class="btn header-item waves-effect" id="page-header-user-dropdown"
+                            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <img class="rounded-circle header-profile-user" src="/assets/images/users/avatar-7.jpg"
+                                alt="Header Avatar">
+                            <span class="d-none d-xl-inline-block ms-1">James</span>
+                            <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-end">
+                            <!-- item-->
+                            <a class="dropdown-item" href="#">
+                                <i class="dripicons-rocket"></i> Start your day</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item text-danger" href="/logout"><i
+                                    class="mdi mdi-power font-size-16 align-middle me-1 text-danger"></i>
+                                Logout</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- ========== Left Sidebar Start ========== -->
+        <div class="vertical-menu">
+            <div data-simplebar class="h-100">
+                <!--- Sidemenu -->
+                <div id="sidebar-menu">
+                    <!-- Left Menu Start -->
+                    <ul class="metismenu list-unstyled" id="side-menu">
+                        <li class="sidebar-li">
+                            <a href="/" class="waves-effect">
+                                <i class="dripicons-home"></i>
+                                <!-- <span class="badge rounded-pill bg-info float-end">3</span> -->
+                                <span>Dashboard</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-li">
+                            <a href="javascript: void(0);" class="has-arrow waves-effect">
+                                <i class="dripicons-to-do"></i>
+                                <span>Complaints</span>
+                            </a>
+                            <ul class="sub-menu" aria-expanded="false">
+                                <li><a href="/complaintDetails">Complaint Details</a></li>
+                                <li><a href="#">Assigned to NetEx</a></li>
+                                <li><a href="#">Closed Complaints</a></li>
+                                <li><a href="#">User Feedback</a></li>
+                                <li><a href="#">Download Data</a></li>
+                            </ul>
+                        </li>
+
+                        <li class="sidebar-li">
+                            <a href="javascript: void(0);" class="has-arrow waves-effect">
+                                <i class="dripicons-folder"></i>
+                                <span>Project</span>
+                            </a>
+                            <ul class="sub-menu" aria-expanded="false">
+                                <li><a href="#">Create Project</a></li>
+                                <li><a href="#">Edit Admin</a></li>
+                                <li><a href="#">Add Executive</a></li>
+                                <li><a href="#">Edit Executive</a></li>
+                                <li><a href="#">Executive Attendance</a></li>
+                                <li><a href="#">Add Locations</a></li>
+                                <li><a href="#">Add Licence</a></li>
+                            </ul>
+                        </li>
+
+                        <li class="sidebar-li">
+                            <a href="javascript: void(0);" class="has-arrow waves-effect">
+                                <i class="dripicons-star"></i>
+                                <span>Rating</span>
+                            </a>
+                            <ul class="sub-menu" aria-expanded="false">
+                                <li><a href="#">Ratings</a></li>
+                                <li><a href="#">Coverage</a></li>
+                            </ul>
+                        </li>
+
+                        <li class="sidebar-li">
+                            <a href="javascript: void(0);" class="has-arrow waves-effect">
+                                <i class="dripicons-graph-bar"></i>
+                                <span>Tower Data</span>
+                            </a>
+                            <ul class="sub-menu" aria-expanded="false">
+                                <li><a href="#">Upload Tower Data</a></li>
+                                <li><a href="#">View Tower Data</a></li>
+                            </ul>
+                        </li>
+
+                        <li class="sidebar-li">
+                            <a href="chat.html" class=" waves-effect">
+                                <i class="dripicons-graph-pie"></i>
+                                <span>BI Report</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-li">
+                            <a href="javascript: void(0);" class="has-arrow waves-effect">
+                                <i class="dripicons-user-group"></i>
+                                <span>Users</span>
+                            </a>
+                            <ul class="sub-menu" aria-expanded="false">
+                                <li><a href="#">Overview</a></li>
+                                <li><a href="#">Profiles</a></li>
+                                <li><a href="#">Pre-Register</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <!-- Sidebar -->
+            </div>
+        </div>
+        <!-- Left Sidebar End -->

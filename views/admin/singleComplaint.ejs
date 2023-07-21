@@ -1,0 +1,439 @@
+<%- include('../common/header') %>
+  <%- include('../common/sidebar') %>
+
+    <!-- Start right Content here -->
+    <div class="main-content">
+
+      <div class="page-content">
+
+        <!-- start page title -->
+        <div class="page-title-box">
+          <div class="container-fluid">
+            <div class="row align-items-center">
+              <div class="col-sm-6">
+                <div class="page-title">
+                  <ol class="breadcrumb m-0">
+                    <li class="breadcrumb-item">Complaints</li>
+                    <li class="breadcrumb-item"><a href="/complaintDetails" style="color: blue;">Complaint Details</a>
+                    </li>
+                    <li class="breadcrumb-item" style="color: red;">
+                      <%= complaints['complaint'].taskSNo %>
+                    </li>
+                    <input type="hidden" id="_id_val" value="<%=complaints['complaint'].taskSNo%>">
+                  </ol>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- end page title -->
+
+        <div class="container-fluid">
+          <div class="page-content-wrapper">
+            <div class="col-12">
+              <div class="card">
+                <div class="card-body single-page-card">
+                  <div class="alert alert-danger text" role="alert" style="width: 40%;"><b>Select any option to download
+                      PDF</b></div>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="single-c-div">
+                        <b><span>Customer Name : </span></b>
+                        <%= complaints['complaint'].name %>
+                      </div>
+                      <div class="single-c-div">
+                        <b><span>Mobile No : </span></b>
+                        <%= complaints['complaint'].mobile %>
+                      </div>
+                      <div class="single-c-div">
+                        <b><span>Network Type : </span></b>
+                        <%= complaints['complaint'].networkType %>
+                      </div>
+                    </div>
+                    <div class="col-md-3"></div>
+                    <div class="col-md-3">
+                      <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                        data-bs-target="#downloadModal">Download SIM Data</button>
+                    </div>
+                  </div>
+
+                  <div>
+                    <div class="table-responsive">
+                      <table class="table table-bordered table-hover">
+                        <thead class="thead-dark">
+                          <tr class="table-dark">
+                            <th class="th-class">Sim type</th>
+                            <th class="th-class">
+                              <%= (!complaints['complaint'].sim1) ? "SIM 1" : complaints['complaint'].sim1==" "
+                                ? "SIM 1" : complaints['complaint'].sim1.toUpperCase() %>
+                            <th class="th-class">
+                              <%= (!complaints['complaint'].sim2) ? "SIM 2" : complaints['complaint'].sim2==" "
+                                ? "SIM 2" : complaints['complaint'].sim2.toUpperCase() %>
+                          </tr>
+                        </thead>
+                        <tbody class="table-light" style="border-width: 1px;border-color: #000;">
+                          <tr>
+                            <td class="td-class">RF Cell Id</td>
+                            <td class="td-class">
+                              <%= complaints['sim1_ext_data'].cid ? complaints['sim1_ext_data'].cid : "" %>
+                            </td>
+                            <td class="td-class">
+                              <%= complaints['sim2_ext_data'].cid ? complaints['sim2_ext_data'].cid : "" %>
+                            </td>
+                          </tr>
+
+                          <tr>
+                            <td class="td-class">RSRP (Low,Avg,High)
+                            </td>
+                            <td class="td-class">
+                              <%= complaints['sim1res'] ? complaints['sim1res'].lowestRsrp+' , ' : "" %>
+                          <%= complaints['sim1res'] ? complaints['sim1res'].avgRsrp + ' , ' : "" %>
+                          <%= complaints['sim1res'] ? complaints['sim1res'].highestRsrp : "" %>
+                            </td>
+                            <td class="td-class">
+                              <%= complaints['sim2res'] ? complaints['sim2res'].lowestRsrp+' , ' : "" %>
+                          <%= complaints['sim2res'] ? complaints['sim2res'].avgRsrp+' , ' : "" %>
+                          <%= complaints['sim2res'] ? complaints['sim2res'].highestRsrp : "" %>
+                            </td>
+                          </tr>
+
+                          <tr>
+                            <td class="td-class">RSRQ (Low,Avg,High)</td>
+                            <td class="td-class">
+                              <%= complaints['sim1res'] ? complaints['sim1res'].lowestRsrq+' , ' : "" %>
+                          <%= complaints['sim1res'] ? complaints['sim1res'].avgRsrq+' , ' : "" %>
+                          <%= complaints['sim1res'] ? complaints['sim1res'].highestRsrq : "" %>
+                            </td>
+                            <td class="td-class">
+                              <%= complaints['sim2res'] ? complaints['sim2res'].lowestRsrq+' , ' : "" %>
+                          <%= complaints['sim2res'] ? complaints['sim2res'].avgRsrq+' , ' : "" %>
+                          <%= complaints['sim2res'] ? complaints['sim2res'].highestRsrq : "" %>
+                            </td>
+                          </tr>
+
+                          <tr>
+                            <td class="td-class">SINR (Low,Avg,High)</td>
+                            <td class="td-class">
+                              <%= complaints['sim1res'] ? complaints['sim1res'].lowestSinr +' , ' : "" %>
+                          <%= complaints['sim1res'] ? complaints['sim1res']. avgSinr+' , ' : "" %>
+                          <%= complaints['sim1res'] ? complaints['sim1res'].highestSinr : "" %>
+                            </td>
+                            <td class="td-class">
+                              <%= complaints['sim2res'] ? complaints['sim2res'].lowestSinr +' , ' : "" %>
+                          <%= complaints['sim2res'] ? complaints['sim2res']. avgSinr+' , ' : "" %>
+                          <%= complaints['sim2res'] ? complaints['sim2res'].highestSinr : "" %>
+                            </td>
+                          </tr>
+
+                          <tr>
+                            <td class="td-class">CQI (Low,Avg,High)</td>
+                            <td class="td-class">
+                              <%= complaints['sim1res'] ? complaints['sim1res'].lowestCqi+' , ' : "" %>
+                          <%= complaints['sim1res'] ? complaints['sim1res'].avgCqi+' , ' : "" %>
+                          <%= complaints['sim1res'] ? complaints['sim1res'].highestCqi : "" %>
+                            </td>
+                            <td class="td-class">
+                              <%= complaints['sim2res'] ? complaints['sim2res'].lowestCqi+' , ' : "" %>
+                          <%= complaints['sim2res'] ? complaints['sim2res'].avgCqi+' , ' : "" %>
+                          <%= complaints['sim2res'] ? complaints['sim2res'].highestCqi: "" %>
+                            </td>
+                          </tr>
+
+                          <tr>
+                            <td class="td-class">TAC</td>
+                            <td class="td-class">
+                              <%= complaints['sim1_ext_data'].tac %>
+                            </td>
+                            <td class="td-class">
+                              <%= complaints['sim2_ext_data'].tac %>
+                            </td>
+                          </tr>
+
+                          <tr>
+                            <td class="td-class">PCI</td>
+                            <td class="td-class">
+                              <%= complaints['sim1_ext_data'].pci %>
+                            </td>
+                            <td class="td-class">
+                              <%= complaints['sim2_ext_data'].pci %>
+                            </td>
+                          </tr>
+
+                          <tr>
+                            <td class="td-class">MNC</td>
+                            <td class="td-class">
+                              <%= complaints['sim1_ext_data'].mnc %>
+                            </td>
+                            <td class="td-class">
+                              <%= complaints['sim2_ext_data'].mnc %>
+                            </td>
+                          </tr>
+
+                          <tr>
+                            <td class="td-class">MCC</td>
+                            <td class="td-class">
+                              <%= complaints['sim1_ext_data'].mcc %>
+                            </td>
+                            <td class="td-class">
+                              <%= complaints['sim2_ext_data'].mcc %>
+                            </td>
+                          </tr>
+
+                          <tr>
+                            <td class="td-class">Band </td>
+                            <td class="td-class">
+                              <%= complaints['sim1_ext_data'].band %>
+                            </td>
+                            <td class="td-class">
+                              <%= complaints['sim2_ext_data'].band %>
+                            </td>
+                          </tr>
+
+                          <tr>
+                            <td class="td-class">ARFCN </td>
+                            <td class="td-class">
+                              <%= complaints['sim1_ext_data'].arfcn %>
+                            </td>
+                            <td class="td-class">
+                              <%= complaints['sim2_ext_data'].arfcn %>
+                            </td>
+                          </tr>
+
+                          <tr>
+                            <td class="td-class">Geolocation - Lat & Long</td>
+                            <td class="td-class">
+                              <%= complaints['complaint'].latitude %> & <%= complaints['complaint'].longitude %>
+                            </td>
+                            <td class="td-class">
+                              <% if(complaints['sim2res']) {%>
+                                <%= complaints['complaint'].latitude %> & <%= complaints['complaint'].longitude %>
+                                    <% } %>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+
+                  <% if(complaints['complaint'].neighbours_list.data !='' ) { %>
+                    <div class="table-responsive">
+                      <div class="text-center" style="padding-top: 20px;padding-bottom: 10px;">
+                        <h4>Neighbours List</h4>
+                      </div>
+                      <table class="table table-bordered table-hover">
+                        <thead>
+                          <tr class="table-dark">
+                            <th class="th-class">Cell Id</th>
+                            <th class="th-class">Lac</th>
+                            <th class="th-class">Nci</th>
+                            <th class="th-class">Arfcn</th>
+                            <th class="th-class">Level</th>
+                            <th class="th-class">Qual</th>
+                          </tr>
+                        </thead>
+                        <tbody class="table-light" style="border-width: 1px;border-color: #000;">
+                          <% for (const neighbour of complaints['complaint'].neighbours_list['data']) { %>
+                            <tr>
+                              <td class="td-class">
+                                <%= neighbour.c_id %>
+                              </td>
+                              <td class="td-class">
+                                <%= neighbour.lac %>
+                              </td>
+                              <td class="td-class">
+                                <%= neighbour.nci %>
+                              </td>
+                              <td class="td-class">
+                                <%= neighbour.arfcn %>
+                              </td>
+                              <td class="td-class">
+                                <%= neighbour.level %>
+                              </td>
+                              <td class="td-class">
+                                <%= neighbour.qual %>
+                              </td>
+                            </tr>
+                            <% } %>
+                        </tbody>
+                      </table>
+                    </div>
+                    <% } %>
+
+                      <% if(complaints['complaint'].testType=='Data Test' ) { %>
+                        <div class="table-responsive">
+                          <div class="text-center" style="padding-top: 20px;padding-bottom: 10px;">
+                            <h4>Data Diagnostic Test Results</h4>
+                          </div>
+                          <table class="table table-bordered table-hover">
+                            <thead>
+                              <tr class="table-dark">
+                                <th class="th-class">Initial Time</th>
+                                <th class="th-class">Duration</th>
+                                <th class="th-class">Bytes Transferred</th>
+                                <th class="th-class">Total Interruption</th>
+                                <th class="th-class">Total Buffer</th>
+                                <th class="th-class">Resolution</th>
+                                <th class="th-class">Amazon.in Loading Time</th>
+                                <th class="th-class">Flipkart.com Loading Time</th>
+                              </tr>
+                            </thead>
+                            <tbody class="table-light" style="border-width: 1px;border-color: #000;">
+                              <tr>
+                                <td class="td-class">
+                                  <%= complaints['complaint'].dataTest.initial %>
+                                </td>
+                                <td class="td-class">
+                                  <%= complaints['complaint'].dataTest.duration %>
+                                </td>
+                                <td class="td-class">
+                                  <%= complaints['complaint'].dataTest.bytesTransferred %>
+                                </td>
+                                <td class="td-class">
+                                  <%= complaints['complaint'].dataTest.interruptions=="" ||
+                                    complaints['complaint'].dataTest.interruptions=="null" ? "-" :
+                                    complaints['complaint'].dataTest.interruptions ;%>
+                                </td>
+                                <td class="td-class">
+                                  <%= complaints['complaint'].dataTest.buffer %>
+                                </td>
+                                <td class="td-class">
+                                  <%= complaints['complaint'].dataTest.resolution %>
+                                </td>
+                                <td class="td-class">
+                                  <%= complaints['complaint'].dataTest.browsing_amazon %>
+                                </td>
+                                <td class="td-class">
+                                  <%= complaints['complaint'].dataTest.browsing_flip %>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                        <% } %>
+
+                          <% if(!complaints['complaint'].closeRemarks) { %>
+                            <div class="row">
+                              <div class="col-sm-11 form-group">
+                                <label for="remarks"><b>Remarks *</b></label>
+                                <textarea class="form-control" id="remarks_text" rows="3"
+                                  uid="<%= complaints['complaint'].taskSNo %>"></textarea>
+                              </div>
+                              <div class="col-sm-1" style="margin: auto;">
+                                <button type="button" class="btn btn-danger" id="comp_close">Close</button>
+                              </div>
+                            </div>
+                            <% } else{ %>
+                              <div class="row">
+                                <div class="col-sm-11 form-group">
+                                  <label for="remarks"><b>Remarks : </b></label>
+                                  <span>
+                                    <%= complaints['complaint'].closeRemarks %>
+                                  </span>
+                                </div>
+                                <div class="col-sm-11 form-group">
+                                  <label for="Outcome"><b>Outcome : </b></label>
+                                  <span>
+                                    <%= complaints['complaint'].outcome %>
+                                  </span>
+                                </div>
+                              </div>
+                              <% } %>
+                </div>
+              </div>
+            </div> <!-- end col -->
+          </div> <!-- end row -->
+        </div>
+
+      </div> <!-- container-fluid -->
+    </div>
+    <!-- End Page-content -->
+
+    </div>
+    <!-- end main content-->
+
+    </div>
+    <!-- END layout-wrapper -->
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="myModal">Outcome *</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form id="statusForm">
+              <input type="hidden" id="hidden-id-field">
+              <select name="outcome" id="outcome" class="form-control">
+                <option value="Select">Select any option</option>
+                <option value="Temporary outage - Problem Resolved">Temporary outage - Problem Resolved
+                </option>
+                <option value="Temporary issue - Problem Resolved">Temporary issue - Problem Resolved
+                </option>
+                <option value="Corrective action Planned">Corrective action Planned</option>
+                <option value="Issue Resolved">Issue Resolved</option>
+                <option value="Working Fine">Working Fine</option>
+                <option value="Customer Not Co-operating">Customer Co-operating</option>
+              </select>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-success" id="report-submit">Submit</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- warning modal -->
+    <div class="modal fade" id="warning-modal" tabindex="-1">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="alert alert-danger d-flex align-items-center" role="alert">
+              <i class="fa fa-exclamation-triangle" aria-hidden="true"> </i>&nbsp;&nbsp;&nbsp;Fill Required field.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+
+    <!-- download modal -->
+    <div class="modal fade" id="downloadModal" tabindex="-1">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Download SIM Data</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+          <div class="modal-body">
+            <% if(complaints['sim1_ext_data']) {%>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="sim1Checkbox">
+                <label class="form-check-label" for="sim1Checkbox">
+                  SIM 1 Data
+                </label>
+              </div>
+              <% } %>
+                <% if(complaints['sim2_ext_data']) {%>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="sim2Checkbox">
+                    <label class="form-check-label" for="sim2Checkbox">
+                      SIM 2 Data
+                    </label>
+                  </div>
+                  <% } %>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" id="downloadBtn">Download</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <%- include('../common/footer') %>
