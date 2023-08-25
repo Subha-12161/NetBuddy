@@ -14,13 +14,6 @@ const preUserRoutes = require('./routes/preUserRoute');
 
 const path = require('path');
 
-const morgan = require('morgan');
-const fs = require('fs');
-const logger = require('./middleware/logger');
-const accesslogger = morgan(':method :url :status :res[content-length] - :response-time ms :date[web]', {
-    stream: fs.createWriteStream('access.log', { flags: 'a' })
-});
-
 app.use(express.json());
 app.use(cookieParser());
 app.set('view engine', 'ejs');
