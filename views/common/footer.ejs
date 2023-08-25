@@ -98,13 +98,13 @@
       if ($('#sim1Checkbox').is(':checked') && $('#sim2Checkbox').is(':checked')) {
 
         var anchor = document.createElement('a');
-        anchor.href = 'http://localhost:7573/api/admin/complaints/exportpdfsim1/' + id;
+        anchor.href = 'https://tiny-jade-camel-hose.cyclic.cloud/api/admin/complaints/exportpdfsim1/' + id;
         anchor.target = "_blank";
         anchor.click();
 
         setTimeout(function () {
           var anchor = document.createElement('a');
-          anchor.href = 'http://localhost:7573/api/admin/complaints/exportpdfsim2/' + id;
+          anchor.href = 'https://tiny-jade-camel-hose.cyclic.cloud/api/admin/complaints/exportpdfsim2/' + id;
           anchor.target = "_blank";
           anchor.click();
         }, 1000);
@@ -112,13 +112,13 @@
         $('#sim2Checkbox').prop('checked', false);
       } else if ($('#sim2Checkbox').is(':checked')) {
         var anchor = document.createElement('a');
-        anchor.href = 'http://localhost:7573/api/admin/complaints/exportpdfsim2/' + id;
+        anchor.href = 'https://tiny-jade-camel-hose.cyclic.cloud/api/admin/complaints/exportpdfsim2/' + id;
         anchor.target = "_blank";
         anchor.click();
         $('#sim2Checkbox').prop('checked', false);
       } else if ($('#sim1Checkbox').is(':checked')) {
         var anchor = document.createElement('a');
-        anchor.href = 'http://localhost:7573/api/admin/complaints/exportpdfsim1/' + id;
+        anchor.href = 'https://tiny-jade-camel-hose.cyclic.cloud/api/admin/complaints/exportpdfsim1/' + id;
         anchor.target = "_blank";
         anchor.click();
         $('#sim1Checkbox').prop('checked', false);
