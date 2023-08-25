@@ -1,6 +1,7 @@
 require('../db/conn');
 const Complain = require('../model/complaintsSchema');
 const User = require('../model/mobileUserSchema');
+const logger = require('../middleware/logger');
 const PdfPrinter = require('pdfmake');
 const path = require('path');
 let imagePath = path.join((__dirname, 'public/assets/images/header.PNG'));
@@ -32,7 +33,7 @@ const viewComplain = async (req, res) => {
             totalPages: totalPages
         });
     } catch (error) {
-        console.log(`error is ${error}`);
+        logger.error(`error is ${error}`);
         res.send("error");
     }
 };
@@ -131,7 +132,7 @@ const viewSingleComplain = async (req, res) => {
             res.send("Id not found in url");
         }
     } catch (error) {
-        console.log(`error is ${error}`);
+        logger.error(`error is ${error}`);
         res.send("error");
     }
 };
@@ -146,9 +147,11 @@ const closeComplaint = async (req, res) => {
         if (resData) {
             res.status(200).send("OK");
         } else {
+            logger.error(`Unable to close Complaint`);
             res.status(500).send("Something went wrong");
         }
     } catch (error) {
+        logger.error(`error is ${error}`);
         res.send("error");
     }
 };
@@ -202,12 +205,11 @@ const createComplain = async (req, res) => {
 
         const complaint = new Complain(complaintData);
         await complaint.save();
-        console.log(`${req.body.details.testType} complaint Successfull saved `);
         res.status(201).json({ Message: "Successfull" });
 
 
     } catch (error) {
-        console.error(error);
+        logger.error(error);
         res.status(500).send("An error occurred: " + error.message);
     }
 }
@@ -432,7 +434,7 @@ const exportPdfSim1 = async (req, res) => {
 
                         // 5
                         {
-                            marginTop: 20,
+                            marginTop: 40,
                             text: 'SERVING CELLS',
                             width: 'auto',
                             bold: true,
@@ -590,7 +592,7 @@ const exportPdfSim1 = async (req, res) => {
                     });
 
                     docDefinition.content[8].push({
-                        marginTop: 20,
+                        marginTop: 40,
                         text: 'NEIGHBOUR CELLS',
                         width: 'auto',
                         bold: true,
@@ -636,7 +638,7 @@ const exportPdfSim1 = async (req, res) => {
                 if (resFound.dataFound.testType == "Data Test") {
                     docDefinition.content[10].push(
                         {
-                            marginTop: 50,
+                            marginTop: 60,
                             text: 'DATA DIAGNOSTIC TEST RESULTS',
                             width: 'auto',
                             bold: true,
@@ -953,7 +955,9 @@ const exportPdfSim1 = async (req, res) => {
         }
 
     } catch (error) {
+        
         console.log(`sim1 pdf error ${error}`);
+
     }
 }
 
@@ -1111,7 +1115,7 @@ const exportPdfSim2 = async (req, res) => {
 
                         // 3
                         {
-                            marginTop: 20,
+                            marginTop: 40,
                             text: 'RF MEASUREMENTS',
                             width: 'auto',
                             bold: true,
@@ -1161,7 +1165,7 @@ const exportPdfSim2 = async (req, res) => {
 
                         // 5
                         {
-                            marginTop: 20,
+                            marginTop: 50,
                             text: 'SERVING CELLS',
                             width: 'auto',
                             bold: true,
@@ -1170,7 +1174,7 @@ const exportPdfSim2 = async (req, res) => {
 
                         // 6
                         {
-                            marginTop: 10,
+                            marginTop: 30,
                             style: 'tableExample',
                             table: {
                                 widths: [95, 95, 95, 95, 95],

@@ -18,7 +18,7 @@ const mobileUserSchema = new mongoose.Schema({
     complaints_count: {
         type: Number,
         required: false,
-        default:1
+        default: 1
     },
     mobile: {
         type: String,
