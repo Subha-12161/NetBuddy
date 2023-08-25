@@ -3,7 +3,6 @@ require('./db/conn');
 const authenticate = require('./middleware/auth');
 const axios = require('axios');
 
-
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const port = process.env.PORT || 3000;
@@ -15,18 +14,25 @@ const preUserRoutes = require('./routes/preUserRoute');
 
 const path = require('path');
 
+const morgan = require('morgan');
+const fs = require('fs');
+const logger = require('./middleware/logger');
+const accesslogger = morgan(':method :url :status :res[content-length] - :response-time ms :date[web]', {
+    stream: fs.createWriteStream('access.log', { flags: 'a' })
+});
+
 app.use(express.json());
 app.use(cookieParser());
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
-app.use(express.static(path.join(__dirname, 'public')))
+app.use(express.static(path.join(__dirname, 'public')));
 
 
-app.use('/api/user', userRoutes);
-app.use('/api/admin/complaints', complaintsRoutes);
-app.use('/api/preuser', preUserRoutes);
-app.use('/api/complaint', complaintsRoutes);
+app.use('/api/user', accesslogger, userRoutes);
+app.use('/api/admin/complaints', accesslogger, complaintsRoutes);
+app.use('/api/preuser', accesslogger, preUserRoutes);
+app.use('/api/complaint', accesslogger, complaintsRoutes);
 
 
 // Rendering pages
@@ -61,14 +67,14 @@ app.get('/complaintDetails', authenticate.Authenticate, async (req, res) => {
             let page = parseInt(req.query.page) || 1;
             let limit = parseInt(req.query.limit) || 100;
 
-            const response = await axios.get(`http://localhost:7573/api/admin/complaints/view-complaint?page=${page}&limit=${limit}`);
+            const response = await axios.get(`https://tiny-jade-camel-hose.cyclic.cloud/api/admin/complaints/view-complaint?page=${page}&limit=${limit}`);
             const complaints = response.data;
 
             res.render('admin/complaintDetails', { complaints: complaints });
 
         } else {
             // single complaint
-            const response = await axios.get(`http://localhost:7573/api/admin/complaints/view-single-complaint/${req.query.id}`);
+            const response = await axios.get(`https://tiny-jade-camel-hose.cyclic.cloud/api/admin/complaints/view-single-complaint/${req.query.id}`);
             const complaints = response.data;
             res.render('admin/singleComplaint', { complaints: complaints });
         }
@@ -84,13 +90,6 @@ app.get("/logout", (req, res) => {
     res.redirect("/");
 });
 
-app.get('/abc', authenticate.userAuthenticate, (req, res) => {
-    if (!req.rootUser) {
-        res.send('Unauthorized');
-    } else {
-        res.json({ rootUser: req.rootUser });
-    }
-});
 
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);

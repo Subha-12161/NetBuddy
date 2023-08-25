@@ -28,14 +28,21 @@ const Authenticate = async (req, res, next) => {
 
 const userAuthenticate = async (req, res, next) => {
     try {
-        const token = req.body.JWT;
+        console.log(`in userAuthenticate`);
+        console.log(`req.body.details in auth : ${req.body.details}`);
+        const token = req.body.details.JWT;
+        console.log(`token = ${token}`)
         if (!token) {
+            console.log(`NO token`);
             return res.send('NO token');
         }
         const verifyToken = jwt.verify(token, process.env.SECRET_KEY)
         const findUser = await mobileUser.findOne({ _id: verifyToken._id, tokens: token });
-
-        if (!findUser) { throw new Error('User not found') };
+        console.log(`findUser : ${findUser}`);
+        if (!findUser) {
+            throw new Error('User not found')
+            console.log('User not found');
+        };
 
         req.token = token;
         req.rootUser = findUser;
