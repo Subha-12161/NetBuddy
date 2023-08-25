@@ -5,7 +5,7 @@ const axios = require('axios');
 
 const express = require('express');
 const cookieParser = require('cookie-parser');
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 7573;
 const app = express();
 
 const userRoutes = require('./routes/user');
@@ -29,10 +29,10 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname, 'public')));
 
 
-app.use('/api/user', accesslogger, userRoutes);
-app.use('/api/admin/complaints', accesslogger, complaintsRoutes);
-app.use('/api/preuser', accesslogger, preUserRoutes);
-app.use('/api/complaint', accesslogger, complaintsRoutes);
+app.use('/api/user', userRoutes);
+app.use('/api/admin/complaints',complaintsRoutes);
+app.use('/api/preuser', preUserRoutes);
+app.use('/api/complaint', complaintsRoutes);
 
 
 // Rendering pages
